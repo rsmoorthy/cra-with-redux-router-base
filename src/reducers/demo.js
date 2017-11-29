@@ -1,6 +1,8 @@
 const initialState = {
-  counter: 0,
-  text: ""
+  counter: 3,
+  text: "",
+  apps: [],
+  dummyData: {}
 }
 
 export default (state = initialState, action) => {
@@ -9,6 +11,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         counter: state.counter + 1,
+        apps: [...state.apps, state.counter],
         text: state.text + " (" + state.text.length + ")"
       }
 
@@ -24,6 +27,20 @@ export default (state = initialState, action) => {
       return {
         ...state,
         text: action.value
+      }
+
+    case "GO_BACK":
+      // typeof action.history === "object" && action.history.goBack()
+      return {
+        ...state,
+        apps: state.apps.length ? state.apps.slice(1) : state.apps
+      }
+
+    case "DUMMY_DATA":
+      const id = action.id
+      return {
+        ...state,
+        dummyData: { ...state.dummyData, [id]: action.value }
       }
 
     default:
